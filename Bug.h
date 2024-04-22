@@ -16,7 +16,7 @@ enum Direction {
 
 class Bug {
 
-public:
+protected:
     int id;
     pair<int, int> position;
     Direction direction;
@@ -24,29 +24,9 @@ public:
     bool alive;
     list<pair<int, int>> path;
 
+public:
     virtual void move() = 0;
 
-    bool isWayBlocked(Direction dir) {
-        if (dir == North) {
-            if (position.second == 0) {
-                return true;
-            }
-        }
-        if (dir == East) {
-            if (position.first == size - 1) {
-                return true;
-            }
-        }
-        if (dir == South) {
-            if (position.second == size - 1) {
-                return true;
-            }
-        }
-        if (dir == West) {
-            if (position.first == 0) {
-                return true;
-            }
-        }
-    }
+    virtual bool isWayBlocked(Direction dir) = 0;
 };
 #endif //CA2BIANCAVALICEC_BUG_H
