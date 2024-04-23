@@ -12,6 +12,7 @@ using namespace std;
 void readFromFile();
 void parseLine(const string &strline);
 void printBug(Bug *bug);
+void findBug();
 
 vector<Bug *> bugs_vector;
 
@@ -33,6 +34,7 @@ int main() {
             }
         }
         else if (choice == 2){
+            findBug();
         }
         else if (choice == 3) {
             for (auto bug: bugs_vector) {
@@ -155,4 +157,19 @@ void printBug(Bug *bug){
                  << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
                  << alive << " " << dynamic_cast<Hopper *>(bug)->getHopLength() << endl;
         }
+}
+
+void findBug() {
+    int id;
+    cout << "Enter bug id: ";
+    cin >> id;
+
+    for (auto bug: bugs_vector) {
+        if (bug->getId() == id) {
+            printBug(bug);
+            return;
+        }
+    }
+
+    cout << "Bug " << id << " not found" << endl;
 }
