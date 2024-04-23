@@ -58,4 +58,6 @@ void Hopper::move() {
             position.first--;
         }
     }
+
+    path.push_back(position);
 }

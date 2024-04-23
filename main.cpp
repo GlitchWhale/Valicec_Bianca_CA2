@@ -13,6 +13,7 @@ void readFromFile();
 void parseLine(const string &strline);
 void printBug(Bug *bug);
 void findBug();
+void bugHistory();
 
 vector<Bug *> bugs_vector;
 
@@ -24,7 +25,8 @@ int main() {
         cout << "1. Display bugs" << endl;
         cout << "2. Find bug" << endl;
         cout << "3. Move bugs" << endl;
-        cout << "4. Exit" << endl;
+        cout << "4. Bug history" << endl;
+        cout << "5. Exit" << endl;
         int choice;
         cin >> choice;
 
@@ -40,7 +42,11 @@ int main() {
             for (auto bug: bugs_vector) {
                 bug->move();
             }
-        } else if (choice == 4) {
+        }
+        else if (choice == 4) {
+            bugHistory();
+        }
+        else if (choice == 5) {
             break;
         } else {
             cout << "Invalid choice" << endl;
@@ -172,4 +178,22 @@ void findBug() {
     }
 
     cout << "Bug " << id << " not found" << endl;
+}
+
+void bugHistory(){
+    for (auto bug: bugs_vector) {
+        cout << bug->getId() << " " << bug->getBugType() << " path: ";
+        for (auto path: bug->getPath()) {
+            cout << "(" << path.first << "," << path.second << ") ";
+        }
+        //checks to see if the bug is alive or dead
+        if (bug->isAlive()) {
+            cout << "Alive!" << endl;
+        } else {
+            cout << "Dead" << endl;
+        }
+
+
+        cout << endl;
+    }
 }
