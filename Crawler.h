@@ -9,8 +9,7 @@
 
 class Crawler : public Bug {
 public:
-    Crawler(int id, pair<int, int> position, Direction direction,int size)
-    {
+    Crawler(int id, pair<int, int> position, Direction direction, int size) {
         this->id = id;
         this->position = position;
         this->direction = direction;

@@ -3,6 +3,11 @@
 //
 #include "Hopper.h"
 
+int Hopper::getHopLength() const {
+    return hopLength;
+}
+
+
 void Hopper::move() {
 //A Hopper bug moves according to these rules:
 //- moves by “hopLength” units in current direction
@@ -15,26 +20,41 @@ void Hopper::move() {
 //square where it hit the edge/wall
 //- record new position in hoppers path history
 
-    for (int i = 0; i < hopLength; i++) {
-        if (isWayBlocked(direction)) {
-            while (isWayBlocked(direction)) {
-                direction = static_cast<Direction>(rand() % 4);
-            }
+    if (isWayBlocked(direction)) {
+        while (isWayBlocked(direction)) {
+            direction = static_cast<Direction>(rand() % 4);
         }
-
-        if (direction == North) {
-            position.second--;
-        } else if (direction == East) {
-            position.first++;
-        } else if (direction == South) {
-            position.second++;
-        } else if (direction == West) {
-            position.first--;
-        }
-
-        path.push_back(position);
     }
 
+    int distance = getHopLength();
 
+    if (direction == North) {
+        for (int i = 0; i < distance; i++) {
+            if (isWayBlocked(direction)) {
+                break;
+            }
+            position.second--;
+        }
+    } else if (direction == East) {
+        for (int i = 0; i < distance; i++) {
+            if (isWayBlocked(direction)) {
+                break;
+            }
+            position.first++;
+        }
+    } else if (direction == South) {
+        for (int i = 0; i < distance; i++) {
+            if (isWayBlocked(direction)) {
+                break;
+            }
+            position.second++;
+        }
+    } else if (direction == West) {
+        for (int i = 0; i < distance; i++) {
+            if (isWayBlocked(direction)) {
+                break;
+            }
+            position.first--;
+        }
+    }
 }
-

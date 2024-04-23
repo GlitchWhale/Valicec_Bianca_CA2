@@ -21,9 +21,9 @@ public:
         this->hopLength = hopLength;
     }
 
+    int getHopLength() const;
+
     void move() override;
-
-
 };
 
 #endif //CA2BIANCAVALICEC_HOPPER_H
