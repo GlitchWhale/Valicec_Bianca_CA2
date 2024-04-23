@@ -13,20 +13,31 @@ void Crawler::move() {
 
     if (isWayBlocked(direction)) {
         while (isWayBlocked(direction)) {
-            direction = static_cast<Direction>(rand() % 4);
+            //set a new direction at random from 1 - 4
+            direction = (rand() % 4 + 1);
         }
     }
 
-    if (direction == North) {
-        position.second--;
-    } else if (direction == East) {
-        position.first++;
-    } else if (direction == South) {
-        position.second++;
-    } else if (direction == West) {
-        position.first--;
+    if (direction == 1) {
+        if (!isWayBlocked(direction)) {
+            position.second--;
+        }
+    } else if (direction == 2) {
+        if (!isWayBlocked(direction)) {
+            position.first++;
+        }
+    } else if (direction == 3) {
+        if (!isWayBlocked(direction)) {
+            position.second++;
+        }
+    } else if (direction == 4) {
+        if (!isWayBlocked(direction)) {
+            position.first--;
+        }
     }
 
     path.push_back(position);
 }
+
+
 

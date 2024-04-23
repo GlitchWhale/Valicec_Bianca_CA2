@@ -5,12 +5,14 @@
 #ifndef CA2BIANCAVALICEC_CRAWLER_H
 #define CA2BIANCAVALICEC_CRAWLER_H
 
+#include <string>
 #include "Bug.h"
 
 class Crawler : public Bug {
 public:
-    Crawler(int id, pair<int, int> position, Direction direction, int size) {
+    Crawler(int id, pair<int, int> position, int direction, int size) {
         this->id = id;
+        this->bugType = "Crawler";
         this->position = position;
         this->direction = direction;
         this->size = size;
@@ -18,7 +20,6 @@ public:
     }
 
     void move() override;
-
 };
 
 #endif //CA2BIANCAVALICEC_CRAWLER_H

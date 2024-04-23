@@ -7,26 +7,30 @@
 #include <utility>
 #include <list>
 #include <cstdlib>
+#include <string>
 
 using namespace std;
-
-enum Direction {
-    North, East, South, West
-};
 
 class Bug {
 
 protected:
     int id;
+    string bugType;
     pair<int, int> position;
-    Direction direction;
+    int direction;
     int size;
     bool alive;
     list<pair<int, int>> path;
 
 public:
     virtual void move() = 0;
-
-    virtual bool isWayBlocked(Direction dir) = 0;
+    [[nodiscard]] bool isWayBlocked(int dir) const;
+    [[nodiscard]] int getId() const;
+    [[nodiscard]] string getBugType() const;
+    [[nodiscard]] pair<int, int> getPosition() const;
+    [[nodiscard]] int getDirection() const;
+    [[nodiscard]] int getSize() const;
+    [[nodiscard]] bool isAlive() const;
+    [[nodiscard]] list<pair<int, int>> getPath() const;
 };
 #endif //CA2BIANCAVALICEC_BUG_H

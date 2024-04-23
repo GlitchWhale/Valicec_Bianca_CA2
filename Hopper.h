@@ -12,8 +12,9 @@ private:
     int hopLength;
 
 public:
-    Hopper(int id, pair<int, int> position, Direction direction, int size, int hopLength) {
+    Hopper(int id, pair<int, int> position, int direction, int size, int hopLength) {
         this->id = id;
+        this->bugType = "Hopper";
         this->position = position;
         this->direction = direction;
         this->size = size;
@@ -21,7 +22,7 @@ public:
         this->hopLength = hopLength;
     }
 
-    int getHopLength() const;
+    [[nodiscard]] int getHopLength() const;
 
     void move() override;
 };
