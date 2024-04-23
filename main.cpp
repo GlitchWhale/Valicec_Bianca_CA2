@@ -14,6 +14,7 @@ void parseLine(const string &strline);
 void printBug(Bug *bug);
 void findBug();
 void bugHistory();
+void displayCells();
 
 vector<Bug *> bugs_vector;
 
@@ -26,7 +27,8 @@ int main() {
         cout << "2. Find bug" << endl;
         cout << "3. Move bugs" << endl;
         cout << "4. Bug history" << endl;
-        cout << "5. Exit" << endl;
+        cout << "5. Display cells" << endl;
+        cout << "6. Exit" << endl;
         int choice;
         cin >> choice;
 
@@ -47,6 +49,9 @@ int main() {
             bugHistory();
         }
         else if (choice == 5) {
+            displayCells();
+        }
+        else if (choice == 6) {
             break;
         } else {
             cout << "Invalid choice" << endl;
@@ -195,5 +200,28 @@ void bugHistory(){
 
 
         cout << endl;
+    }
+}
+
+void displayCells() {
+    //Display all cells in sequence, and the name and id of all bugs currently occupying each cell.
+    //If no bugs are present, display “No bugs present”.
+    //Display the type and id
+
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            cout << "(" << i << "," << j << ") ";
+            bool bugPresent = false;
+            for (auto bug: bugs_vector) {
+                if (bug->getPosition().first == i && bug->getPosition().second == j) {
+                    cout << bug->getBugType() << " " << bug->getId() << " ";
+                    bugPresent = true;
+                }
+            }
+            if (!bugPresent) {
+                cout << "No bugs present";
+            }
+            cout << endl;
+        }
     }
 }
