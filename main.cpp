@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <thread>
 #include "Bug.h"
 #include "Crawler.h"
 #include "Hopper.h"
@@ -12,12 +13,19 @@
 using namespace std;
 
 void readFromFile();
+
 void parseLine(const string &strline);
+
 void printBug(Bug *bug);
+
 void findBug();
+
 void bugHistory();
+
 void displayCells();
+
 void fight();
+
 void writeFile();
 
 vector<Bug *> bugs_vector;
@@ -25,41 +33,64 @@ vector<Bug *> bugs_vector;
 int main() {
     readFromFile();
 
-    //menu that takes the user input and runs appropriate function
     while (true) {
+        cout << "0. Exit" << endl;
         cout << "1. Display bugs" << endl;
         cout << "2. Find bug" << endl;
-        cout << "3. Tap board" << endl;
-        cout << "4. Bug history" << endl;
-        cout << "5. Display cells" << endl;
-        cout << "6. Exit" << endl;
+        cout << "3. Bug history" << endl;
+        cout << "4. Display cells" << endl;
+        cout << "5. Tap board" << endl;
+
         int choice;
         cin >> choice;
 
-        if (choice == 1) {
-            for (auto bug: bugs_vector) {
-                printBug(bug);
-            }
-        }
-        else if (choice == 2){
-            findBug();
-        }
-        else if (choice == 3) {
-            for (auto bug: bugs_vector) {
-                bug->move();
-            }
-            fight();
-        }
-        else if (choice == 4) {
-            bugHistory();
-        }
-        else if (choice == 5) {
-            displayCells();
-        }
-        else if (choice == 6) {
-            break;
-        } else {
-            cout << "Invalid choice" << endl;
+        switch (choice) {
+            case 0:
+                return 0; // Exit the program
+            case 1:
+                for (auto bug: bugs_vector) {
+                    printBug(bug);
+                }
+                break;
+            case 2:
+                findBug();
+                break;
+            case 3:
+                bugHistory();
+                break;
+            case 4:
+                displayCells();
+                break;
+            case 5:
+                // Start simulation
+                while (std::count_if(bugs_vector.begin(), bugs_vector.end(), [](Bug *bug) { return bug->isAlive(); }) !=
+                       1) {
+                    // Perform bug movements
+                    for (auto bug: bugs_vector) {
+                        if (bug->isAlive()) {
+                            bug->move();
+                        }
+                    }
+
+                    // Fight bugs
+                    fight();
+
+                    // Display bugs and cells
+                    displayCells();
+                    for (auto bug: bugs_vector) {
+                        printBug(bug);
+                    }
+
+                    // Wait for one second before the next simulation step
+                    std::this_thread::sleep_for(std::chrono::seconds(1));
+                }
+
+                // Write endgame history
+                writeFile();
+
+                return 0; // Exit after simulation ends
+            default:
+                cout << "Invalid choice" << endl;
         }
     }
 
@@ -128,8 +159,7 @@ void parseLine(const string &strline) {
             hopLength = stoi(temp);
             auto *hopper = new Hopper(id, position, direction, size, hopLength);
             bugs_vector.push_back(hopper);
-        }
-        else if(type=="B"){
+        } else if (type == "B") {
             int id;
             pair<int, int> position;
             int direction;
@@ -146,8 +176,7 @@ void parseLine(const string &strline) {
             size = stoi(temp);
             auto *bishop = new Bishop(id, position, direction, size);
             bugs_vector.push_back(bishop);
-        }
-        else {
+        } else {
             cout << "Invalid type" << endl;
         }
     }
@@ -162,40 +191,40 @@ void parseLine(const string &strline) {
     }
 }
 
-void printBug(Bug *bug){
-        //set the direction to a string
-        string direction;
-        if (bug->getDirection() == 1) {
-            direction = "North";
-        } else if (bug->getDirection() == 2) {
-            direction = "East";
-        } else if (bug->getDirection() == 3) {
-            direction = "South";
-        } else if (bug->getDirection() == 4) {
-            direction = "West";
-        }
+void printBug(Bug *bug) {
+    //set the direction to a string
+    string direction;
+    if (bug->getDirection() == 1) {
+        direction = "North";
+    } else if (bug->getDirection() == 2) {
+        direction = "East";
+    } else if (bug->getDirection() == 3) {
+        direction = "South";
+    } else if (bug->getDirection() == 4) {
+        direction = "West";
+    }
 
-        //set alive to a string say dead or alive
-        string alive;
-        if (bug->isAlive()) {
-            alive = "Alive";
-        } else {
-            alive = "Dead";
-        }
+    //set alive to a string say dead or alive
+    string alive;
+    if (bug->isAlive()) {
+        alive = "Alive";
+    } else {
+        alive = "Dead";
+    }
 
-        if (bug->getBugType() == "Crawler") {
-            cout << bug->getId() << " " << bug->getBugType() << " (" << bug->getPosition().first << ","
-                 << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
-                 << alive << endl;
-        } else if (bug->getBugType() == "Hopper") {
-            cout << bug->getId() << " " << bug->getBugType() << " (" << bug->getPosition().first << ","
-                 << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
-                 << alive << " " << dynamic_cast<Hopper *>(bug)->getHopLength() << endl;
-        } else if (bug->getBugType() == "Bishop") {
-            cout << bug->getId() << " " << bug->getBugType() << " (" << bug->getPosition().first << ","
-                 << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
-                 << alive << endl;
-        }
+    if (bug->getBugType() == "Crawler") {
+        cout << bug->getId() << " " << bug->getBugType() << " (" << bug->getPosition().first << ","
+             << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
+             << alive << endl;
+    } else if (bug->getBugType() == "Hopper") {
+        cout << bug->getId() << " " << bug->getBugType() << " (" << bug->getPosition().first << ","
+             << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
+             << alive << " " << dynamic_cast<Hopper *>(bug)->getHopLength() << endl;
+    } else if (bug->getBugType() == "Bishop") {
+        cout << bug->getId() << " " << bug->getBugType() << " (" << bug->getPosition().first << ","
+             << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
+             << alive << endl;
+    }
 }
 
 void findBug() {
@@ -213,7 +242,7 @@ void findBug() {
     cout << "Bug " << id << " not found" << endl;
 }
 
-void bugHistory(){
+void bugHistory() {
     for (auto bug: bugs_vector) {
         cout << bug->getId() << " " << bug->getBugType() << " path: ";
         for (auto path: bug->getPath()) {
@@ -254,7 +283,7 @@ void displayCells() {
     }
 }
 
-void fight(){
+void fight() {
     //Implement functionality that will cause bugs that land on the same cell to fight. This will happen
     //after a round of moves has taken place – invoked by menu option 4. ( Tap ….). The biggest bug in
     //the cell will eat all other bugs, and will grow by the sum of the sizes of the bugs it eats. The eaten
@@ -290,22 +319,35 @@ void fight(){
 }
 
 //write to endgamehistory file and display every bugs history and the winner
-void writeFile(){
+void writeFile() {
     ofstream outFileStream("endgamehistory.txt");
 
-    if (outFileStream){
-        bugHistory();
+    if (outFileStream) {
+
+        outFileStream << "Endgame history" << endl;
+
+        //write the history of each bug
+        for (auto bug: bugs_vector) {
+            outFileStream << bug->getId() << " " << bug->getBugType() << " path: ";
+            for (auto path: bug->getPath()) {
+                outFileStream << "(" << path.first << "," << path.second << ") ";
+            }
+            if (bug->isAlive()) {
+                outFileStream << "Alive!" << endl;
+            } else {
+                outFileStream << "Died by bug " << bug->getKillerId() << endl;
+            }
+        }
 
         //find the last bug standing
-        for (auto bug: bugs_vector){
-            if (bug->isAlive()){
+        for (auto bug: bugs_vector) {
+            if (bug->isAlive()) {
                 outFileStream << "Last bug standing: " << bug->getId() << " " << bug->getBugType() << endl;
             }
         }
 
         outFileStream.close();
-    }
-    else{
+    } else {
         cout << "Error opening file" << endl;
     }
 }
