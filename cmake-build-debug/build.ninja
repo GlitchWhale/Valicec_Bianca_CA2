@@ -73,6 +73,12 @@ build CMakeFiles/CA2BiancaValicec.dir/Crawler.cpp.obj: CXX_COMPILER__CA2BiancaVa
   OBJECT_DIR = CMakeFiles\CA2BiancaValicec.dir
   OBJECT_FILE_DIR = CMakeFiles\CA2BiancaValicec.dir
 
+build CMakeFiles/CA2BiancaValicec.dir/Bishop.cpp.obj: CXX_COMPILER__CA2BiancaValicec_unscanned_Debug C$:/Users/biava/CLionProjects/CA2BiancaValicec/Bishop.cpp || cmake_object_order_depends_target_CA2BiancaValicec
+  DEP_FILE = CMakeFiles\CA2BiancaValicec.dir\Bishop.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CA2BiancaValicec.dir
+  OBJECT_FILE_DIR = CMakeFiles\CA2BiancaValicec.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CA2BiancaValicec
@@ -81,7 +87,7 @@ build CMakeFiles/CA2BiancaValicec.dir/Crawler.cpp.obj: CXX_COMPILER__CA2BiancaVa
 #############################################
 # Link the executable CA2BiancaValicec.exe
 
-build CA2BiancaValicec.exe: CXX_EXECUTABLE_LINKER__CA2BiancaValicec_Debug CMakeFiles/CA2BiancaValicec.dir/main.cpp.obj CMakeFiles/CA2BiancaValicec.dir/Bug.cpp.obj CMakeFiles/CA2BiancaValicec.dir/Hopper.cpp.obj CMakeFiles/CA2BiancaValicec.dir/Crawler.cpp.obj
+build CA2BiancaValicec.exe: CXX_EXECUTABLE_LINKER__CA2BiancaValicec_Debug CMakeFiles/CA2BiancaValicec.dir/main.cpp.obj CMakeFiles/CA2BiancaValicec.dir/Bug.cpp.obj CMakeFiles/CA2BiancaValicec.dir/Hopper.cpp.obj CMakeFiles/CA2BiancaValicec.dir/Crawler.cpp.obj CMakeFiles/CA2BiancaValicec.dir/Bishop.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\CA2BiancaValicec.dir

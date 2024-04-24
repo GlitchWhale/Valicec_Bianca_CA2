@@ -7,6 +7,7 @@
 #include "Bug.h"
 #include "Crawler.h"
 #include "Hopper.h"
+#include "Bishop.h"
 
 using namespace std;
 
@@ -126,7 +127,26 @@ void parseLine(const string &strline) {
             hopLength = stoi(temp);
             auto *hopper = new Hopper(id, position, direction, size, hopLength);
             bugs_vector.push_back(hopper);
-        } else {
+        }
+        else if(type=="B"){
+            int id;
+            pair<int, int> position;
+            int direction;
+            int size;
+            getline(strSteam, temp, delim);
+            id = stoi(temp);
+            getline(strSteam, temp, delim);
+            position.first = stoi(temp);
+            getline(strSteam, temp, delim);
+            position.second = stoi(temp);
+            getline(strSteam, temp, delim);
+            direction = stoi(temp);
+            getline(strSteam, temp, delim);
+            size = stoi(temp);
+            auto *bishop = new Bishop(id, position, direction, size);
+            bugs_vector.push_back(bishop);
+        }
+        else {
             cout << "Invalid type" << endl;
         }
     }
@@ -170,6 +190,10 @@ void printBug(Bug *bug){
             cout << bug->getId() << " " << bug->getBugType() << " (" << bug->getPosition().first << ","
                  << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
                  << alive << " " << dynamic_cast<Hopper *>(bug)->getHopLength() << endl;
+        } else if (bug->getBugType() == "Bishop") {
+            cout << bug->getId() << " " << bug->getBugType() << " (" << bug->getPosition().first << ","
+                 << bug->getPosition().second << ") " << direction << " " << bug->getSize() << " "
+                 << alive << endl;
         }
 }
 
