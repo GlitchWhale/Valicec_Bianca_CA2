@@ -18,6 +18,7 @@ void findBug();
 void bugHistory();
 void displayCells();
 void fight();
+void writeFile();
 
 vector<Bug *> bugs_vector;
 
@@ -285,5 +286,26 @@ void fight(){
                 }
             }
         }
+    }
+}
+
+//write to endgamehistory file and display every bugs history and the winner
+void writeFile(){
+    ofstream outFileStream("endgamehistory.txt");
+
+    if (outFileStream){
+        bugHistory();
+
+        //find the last bug standing
+        for (auto bug: bugs_vector){
+            if (bug->isAlive()){
+                outFileStream << "Last bug standing: " << bug->getId() << " " << bug->getBugType() << endl;
+            }
+        }
+
+        outFileStream.close();
+    }
+    else{
+        cout << "Error opening file" << endl;
     }
 }
