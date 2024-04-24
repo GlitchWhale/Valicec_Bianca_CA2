@@ -21,6 +21,7 @@ protected:
     int size;
     bool alive;
     list<pair<int, int>> path;
+    int killerId;
 
 public:
     virtual void move() = 0;
@@ -32,5 +33,9 @@ public:
     [[nodiscard]] int getSize() const;
     [[nodiscard]] bool isAlive() const;
     [[nodiscard]] list<pair<int, int>> getPath() const;
+    void setSize(int size);
+    void setAlive(bool alive);
+    void setKillerId(int killerId);
+    [[nodiscard]] int getKillerId() const;
 };
 #endif //CA2BIANCAVALICEC_BUG_H

@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <algorithm>
 #include "Bug.h"
 #include "Crawler.h"
 #include "Hopper.h"
@@ -15,6 +16,7 @@ void printBug(Bug *bug);
 void findBug();
 void bugHistory();
 void displayCells();
+void fight();
 
 vector<Bug *> bugs_vector;
 
@@ -25,7 +27,7 @@ int main() {
     while (true) {
         cout << "1. Display bugs" << endl;
         cout << "2. Find bug" << endl;
-        cout << "3. Move bugs" << endl;
+        cout << "3. Tap board" << endl;
         cout << "4. Bug history" << endl;
         cout << "5. Display cells" << endl;
         cout << "6. Exit" << endl;
@@ -44,6 +46,7 @@ int main() {
             for (auto bug: bugs_vector) {
                 bug->move();
             }
+            fight();
         }
         else if (choice == 4) {
             bugHistory();
@@ -195,7 +198,7 @@ void bugHistory(){
         if (bug->isAlive()) {
             cout << "Alive!" << endl;
         } else {
-            cout << "Dead" << endl;
+            cout << "Died by bug " << bug->getKillerId() << endl;
         }
 
 
@@ -222,6 +225,41 @@ void displayCells() {
                 cout << "No bugs present";
             }
             cout << endl;
+        }
+    }
+}
+
+void fight(){
+    //Implement functionality that will cause bugs that land on the same cell to fight. This will happen
+    //after a round of moves has taken place – invoked by menu option 4. ( Tap ….). The biggest bug in
+    //the cell will eat all other bugs, and will grow by the sum of the sizes of the bugs it eats. The eaten
+    //bugs will be marked as dead (‘alive=false’). We can keep ‘tapping’ the bug board until all the bugs
+    //are dead except one – the Last Bug Standing. Two or more bugs equal in size won’t be able to
+    //overcome each other so the winner is resolved at random.
+
+    //check if there are bugs on the same cell
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            vector<Bug *> bugsOnCell;
+            for (auto bug: bugs_vector) {
+                if (bug->getPosition().first == i && bug->getPosition().second == j) {
+                    bugsOnCell.push_back(bug);
+                }
+            }
+
+            if (bugsOnCell.size() > 1) {
+                //sort the bugs by size
+                sort(bugsOnCell.begin(), bugsOnCell.end(), [](Bug *a, Bug *b) {
+                    return a->getSize() > b->getSize();
+                });
+
+                //the biggest bug eats all other bugs
+                for (int k = 1; k < bugsOnCell.size(); ++k) {
+                    bugsOnCell[0]->setSize(bugsOnCell[0]->getSize() + bugsOnCell[k]->getSize());
+                    bugsOnCell[k]->setAlive(false);
+                    bugsOnCell[k]->setKillerId(bugsOnCell[0]->getId());
+                }
+            }
         }
     }
 }

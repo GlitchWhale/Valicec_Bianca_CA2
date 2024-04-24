@@ -42,3 +42,19 @@ bool Bug::isAlive() const {
 list<pair<int, int>> Bug::getPath() const {
     return path;
 }
+
+void Bug::setSize(int size) {
+    Bug::size = size;
+}
+
+void Bug::setAlive(bool alive) {
+    Bug::alive = alive;
+}
+
+void Bug::setKillerId(int killerId) {
+    Bug::killerId = killerId;
+}
+
+int Bug::getKillerId() const {
+    return killerId;
+}
