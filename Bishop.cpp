@@ -5,87 +5,42 @@
 #include "Bishop.h"
 
 void Bishop::move() {
-    if (isWayBlocked(direction)) {
-        while (isWayBlocked(direction)) {
-            //set a new direction at random from 1 - 4
-            direction = (rand() % 4 + 1);
-        }
+    // Check for edges
+    if (position.first == 0 || position.second == 9) {
+        moveDiagonalUp = true;
+    } else if (position.first == 9 || position.second == 0) {
+        moveDiagonalUp = false;
     }
+
     if (moveDiagonalUp) {
+        // Move diagonally up
         if (direction == 1) {
-            if (!isWayBlocked(direction)) {
-                if(position.first == 0 || position.second == 0){
-                    moveDiagonalUp = false;
-                } else {
-                    position.first--;
-                    position.second--;
-                }
-            }
+            position.first--;
+            position.second--;
         } else if (direction == 2) {
-            if (!isWayBlocked(direction)) {
-                if(position.first == 9 || position.second == 0){
-                    moveDiagonalUp = false;
-                } else {
-                    position.first++;
-                    position.second--;
-                }
-            }
+            position.first++;
+            position.second--;
         } else if (direction == 3) {
-            if (!isWayBlocked(direction)) {
-                if(position.first == 9 || position.second == 9){
-                    moveDiagonalUp = false;
-                } else {
-                    position.first++;
-                    position.second++;
-                }
-            }
+            position.first++;
+            position.second++;
         } else if (direction == 4) {
-            if (!isWayBlocked(direction)) {
-                if(position.first == 0 || position.second == 9){
-                    moveDiagonalUp = false;
-                } else {
-                    position.first--;
-                    position.second++;
-                }
-            }
+            position.first--;
+            position.second++;
         }
     } else {
+        // Move diagonally down
         if (direction == 1) {
-            if (!isWayBlocked(direction)) {
-                if (position.first == 0 || position.second == 9) {
-                    moveDiagonalUp = true;
-                } else {
-                    position.first--;
-                    position.second++;
-                }
-            }
+            position.first--;
+            position.second++;
         } else if (direction == 2) {
-            if (!isWayBlocked(direction)) {
-                if (position.first == 9 || position.second == 9) {
-                    moveDiagonalUp = true;
-                } else {
-                    position.first++;
-                    position.second++;
-                }
-            }
+            position.first++;
+            position.second++;
         } else if (direction == 3) {
-            if (!isWayBlocked(direction)) {
-                if (position.first == 9 || position.second == 0) {
-                    moveDiagonalUp = true;
-                } else {
-                    position.first++;
-                    position.second--;
-                }
-            }
+            position.first++;
+            position.second--;
         } else if (direction == 4) {
-            if (!isWayBlocked(direction)) {
-                if (position.first == 0 || position.second == 0) {
-                    moveDiagonalUp = true;
-                } else {
-                    position.first--;
-                    position.second--;
-                }
-            }
+            position.first--;
+            position.second--;
         }
     }
 

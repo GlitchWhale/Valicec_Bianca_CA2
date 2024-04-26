@@ -11,4 +11,6 @@ add_executable(CA2BiancaValicec main.cpp
         Hopper.cpp
         Crawler.cpp
         Bishop.h
-        Bishop.cpp)
+        Bishop.cpp
+        Board.h
+        Board.cpp)

@@ -37,5 +37,7 @@ public:
     void setAlive(bool alive);
     void setKillerId(int killerId);
     [[nodiscard]] int getKillerId() const;
+    list<pair<int, int>> getHistory();
+
 };
 #endif //CA2BIANCAVALICEC_BUG_H

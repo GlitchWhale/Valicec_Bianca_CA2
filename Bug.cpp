@@ -58,3 +58,7 @@ void Bug::setKillerId(int killerId) {
 int Bug::getKillerId() const {
     return killerId;
 }
+
+list<pair<int, int>> Bug::getHistory() {
+    return path;
+}
