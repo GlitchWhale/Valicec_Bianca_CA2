@@ -24,6 +24,7 @@ public:
     void getBugs(); // Get bugs
     int countBugs(); // Count bugs (alive)
     vector<Bug *> getBugsVector(); // Get bugs vector
+    void clearVector(); // Clear bugs vector
 
 private:
     void move(); // Move bugs

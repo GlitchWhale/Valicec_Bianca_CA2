@@ -182,3 +182,7 @@ int Board::countBugs() {
 vector<Bug *> Board::getBugsVector() {
     return bugs_vector;
 }
+
+void Board::clearVector() {
+    bugs_vector.clear();
+}

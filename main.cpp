@@ -21,6 +21,7 @@ void parseLine(const string &strline, Board *board);
 void writeFile(Board *board);
 
 int main() {
+
     auto *board = new Board();
     readFromFile(board);
 
@@ -66,6 +67,7 @@ int main() {
                 // Write endgame history
                 writeFile(board);
 
+                board->clearVector();
                 delete board;
 
                 return 0; // Exit after simulation ends
