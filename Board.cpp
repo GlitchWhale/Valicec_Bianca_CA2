@@ -1,11 +1,7 @@
-#include <fstream>
 #include <iostream>
 #include <algorithm>
-#include <sstream>
 #include "Board.h"
-#include "Crawler.h"
 #include "Hopper.h"
-#include "Bishop.h"
 #include "Bug.h"
 
 using namespace std;

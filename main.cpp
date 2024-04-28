@@ -1,11 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <string>
 #include <sstream>
 #include <algorithm>
 #include <thread>
-#include "Bug.h"
 #include "Crawler.h"
 #include "Hopper.h"
 #include "Bishop.h"
@@ -186,9 +184,11 @@ void writeFile(Board *board) {
             outFileStream << "Bug id: " << bug->getId() << endl;
             outFileStream << "Bug type: " << bug->getBugType() << endl;
             outFileStream << "Bug history: " << endl;
+            string temp;
             for (auto history: bug->getHistory()) {
-                outFileStream << history.first << history.second << endl;
+                temp += "(" + to_string(history.first) + "," + to_string(history.second) + ") ";
             }
+            outFileStream << temp << endl;
             outFileStream << endl;
         }
 
